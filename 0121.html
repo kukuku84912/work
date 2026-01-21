@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="robots" content="noindex, nofollow">
+    
+    <title data-id="th-modified">欣芸的作品集</title>
+    <style>
+        :root {
+            --bg-light: #F3F1ED;      /* 背景米杏色 */
+            --card-bg: #EAE7E2;       /* 卡片微深一點點的米色 */
+            --accent-color: #3E3A39;  /* 主色深炭灰 */
+            --text-main: #3E3A39;     /* 文字深炭灰 */
+            --text-dim: #666261;      /* 次要文字 */
+        }
+
+        body {
+            font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .header-title {
+            padding: 80px 20px 40px;
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            color: var(--text-main);
+        }
+
+        nav {
+            position: sticky;
+            top: 0; width: 100%;
+            background: rgba(243, 241, 237, 0.9);
+            padding: 15px 0;
+            text-align: center;
+            z-index: 1000;
+            border-bottom: 1px solid #DCD9D4;
+            backdrop-filter: blur(10px);
+        }
+
+        nav button {
+            background: none;
+            border: 1px solid transparent;
+            color: var(--text-dim);
+            padding: 8px 20px;
+            margin: 0 5px;
+            font-size: 0.95rem;
+            font-weight: 300;
+            cursor: pointer;
+            transition: 0.3s;
+            border-radius: 20px;
+        }
+
+        nav button:hover, nav button.active-btn {
+            color: var(--text-main);
+            border-color: var(--accent-color);
+            background: rgba(62, 58, 57, 0.05);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto 80px;
+            padding: 0 20px;
+        }
+
+        .page { display: none; animation: fadeIn 0.6s ease; }
+        .active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* 自我介紹區塊 */
+        .about-section {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            background: var(--card-bg);
+            padding: 50px;
+            border-radius: 4px;
+            margin-bottom: 80px;
+            border: 1px solid #E0DDD8;
+        }
+
+        .profile-pic {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--accent-color);
+            flex-shrink: 0;
+        }
+
+        .about-text { flex-grow: 1; font-weight: 300; }
+        .about-text h3 { margin-top: 0; font-size: 1.4rem; font-weight: 400; color: var(--text-main); }
+        
+        .info-list { 
+            list-style: none; 
+            padding: 0; 
+            margin: 20px 0; 
+            color: var(--text-main); 
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+        .info-list li { margin-bottom: 12px; }
+        .info-list strong { font-weight: 500; color: var(--accent-color); }
+
+        p.intro-p {
+            color: var(--text-main); 
+            font-size: 0.95rem; 
+            line-height: 2; 
+            margin-top: 25px;
+            border-top: 1px solid #DCD9D4;
+            padding-top: 20px;
+        }
+
+        h2 { 
+            text-align: center;
+            margin-bottom: 50px; 
+            font-size: 1.5rem;
+            font-weight: 300;
+            position: relative;
+            padding-bottom: 15px;
+            letter-spacing: 2px;
+        }
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 1px;
+            background-color: var(--accent-color);
+        }
+
+        .category-title {
+            color: var(--text-main);
+            margin: 80px 0 40px;
+            font-size: 1.15rem;
+            font-weight: 400;
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .category-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 1px;
+            background-color: #DCD9D4;
+        }
+
+        .video-wrapper, .short-card {
+            position: relative;
+            height: 0; 
+            overflow: hidden;
+            background: #DCD9D4;
+            border-radius: 4px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 0 0 rgba(0,0,0,0);
+        }
+
+        .video-wrapper { padding-bottom: 56.25%; margin-bottom: 20px; }
+        .short-card { padding-bottom: 177.77%; }
+
+        .video-wrapper:hover, .short-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 24px rgba(62, 58, 57, 0.12);
+        }
+
+        .video-wrapper iframe, .short-card iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border: none;
+        }
+
+        .long-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .shorts-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .contact-card {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 60px 40px;
+            border-radius: 4px;
+            text-align: center;
+            border: 1px solid #E0DDD8;
+        }
+
+        .contact-item {
+            margin: 30px 0;
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: var(--text-main);
+        }
+
+        .contact-item a {
+            color: var(--text-main);
+            text-decoration: none;
+            border-bottom: 1px solid #DCD9D4;
+            transition: 0.3s;
+            padding-bottom: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .about-section { flex-direction: column; text-align: center; padding: 30px; }
+            .header-title { font-size: 1.8rem; }
+            .long-grid { grid-template-columns: 1fr; }
+            .shorts-grid { grid-template-columns: repeat(2, 1fr); }
+            .video-wrapper:hover, .short-card:hover { transform: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-title">欣芸的作品集</div>
+
+<nav id="navbar">
+    <button class="active-btn" onclick="showPage('home', this)">首頁</button>
+    <button onclick="showPage('shorts', this)">短影音作品集</button>
+    <button onclick="showPage('long', this)">長片作品集</button>
+    <button onclick="showPage('contact', this)">聯絡我</button>
+</nav>
+
+<div class="container">
+    
+    <section id="home" class="page active">
+        <div class="about-section">
+            <img src="https://raw.githubusercontent.com/kitty0958479361-spec/kukuku/main/%E6%88%AA%E5%9C%96%202026-01-21%20%E5%87%8C%E6%99%A81.00.54.png" alt="古欣芸" class="profile-pic">
+            <div class="about-text">
+                <h3>簡介</h3>
+                <ul class="info-list">
+                    <li><strong>姓名：</strong>古欣芸</li>
+                    <li><strong>生日：</strong>1995.09.12 (30)</li>
+                    <li><strong>Email：</strong><a href="mailto:kukuku84912@gmail.com">kukuku84912@gmail.com</a></li>
+                    <li>畢業於 淡江大學資訊傳播學系</li>
+                </ul>
+                <p class="intro-p">
+                    過去在 Jella! 擔任影音編輯時，我經手過「胃酸人」與「Jella! 語言星球」等多樣化的頻道內容。我對<strong>影片節奏</strong>有很強的直覺，無論是知識型、生活感還是娛樂類型的影片都能輕鬆駕馭。<br><br>
+                    除了剪輯，我對<strong>特效字卡與包裝</strong>也很講究，<strong>擅長用細緻的視覺效果和調色</strong>來提升整體質感。我不只是把素材拼湊起來，更喜歡在製作過程中不斷調整、挑戰新的呈現方式，希望能透過我的後製，把最棒的畫面與正能量帶給觀眾！
+                </p>
+            </div>
+        </div>
+
+        <h2>精選作品集</h2>
+        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/C5bK_L_d5jc" allowfullscreen></iframe></div>
+        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/bDIBC_EFEAc" allowfullscreen></iframe></div>
+        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/3oun-9Kfj8M" allowfullscreen></iframe></div>
+    </section>
+
+    <section id="shorts" class="page">
+        <h2>短影音作品集</h2>
+        <div class="shorts-grid">
+            <div class="short-card"><iframe src="https://www.youtube.com/embed/ywMYWdFyD6c" allowfullscreen></iframe></div>
+            <div class="short-card"><iframe src="https://www.youtube.com/embed/L6qvS1ZkEw8" allowfullscreen></iframe></div>
+            <div class="short-card"><iframe src="https://www.youtube.com/embed/APkj7DXp9zI" allowfullscreen></iframe></div>
+            <div class="short-card"><iframe src="https://www.youtube.com/embed/U-ER8GKZjpQ" allowfullscreen></iframe></div>
+            <div class="short-card"><iframe src="https://www.youtube.com/embed/XOIyJOkcAy8" allowfullscreen></iframe></div>
+            <div class="short-card"><iframe src="https://www.youtube.com/embed/1uCN4rSGi1o" allowfullscreen></iframe></div>
+            <div class="short-card"><iframe src="https://www.youtube.com/embed/DcQd7dmR41U" allowfullscreen></iframe></div>
+            <div class="short-card"><iframe src="https://www.youtube.com/embed/aYgDzWBVTUA" allowfullscreen></iframe></div>
+        </div>
+    </section>
+
+    <section id="long" class="page">
+        <h2>長片作品集</h2>
+        
+        <h3 class="category-title">📦 開箱類型</h3>
+        <div class="long-grid">
+            <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/h3wbdIaONMU" allowfullscreen></iframe></div>
+            <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ge3LW5rEsfs" allowfullscreen></iframe></div>
+        </div>
+
+        <h3 class="category-title">📷 Vlog 類型</h3>
+        <div class="long-grid">
+            <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/sdP9_2xy_KY" allowfullscreen></iframe></div>
+            <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/BGzFlIJQ8kY" allowfullscreen></iframe></div>
+        </div>
+
+        <h3 class="category-title">🎙️ 靜態訪談類型</h3>
+        <div class="long-grid">
+            <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/hSLo_ZUvhVw" allowfullscreen></iframe></div>             
+            <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/Vd4TKnEbzyE" allowfullscreen></iframe></div>
+            <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/7KIhneF2qZM" allowfullscreen></iframe></div>
+            <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/gmfnG1urjiE" allowfullscreen></iframe></div>
+        </div>
+
+        <h3 class="category-title">🎬 外景拍攝類型</h3>
+        <div class="long-grid">
+            <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/S7vEATLGENc" allowfullscreen></iframe></div>
+            <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/pxU8ZtR1-Ek" allowfullscreen></iframe></div>
+            <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/_A3l-JdOH24" allowfullscreen></iframe></div>
+        </div>
+
+        <h3 class="category-title">✨ 其他</h3>
+        <div class="long-grid">
+            <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ELfkEJwitpo" allowfullscreen></iframe></div>
+            <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ZUiqj3IPYAY" allowfullscreen></iframe></div>
+        </div>
+    </section>
+
+    <section id="contact" class="page">
+        <h2>聯絡我</h2>
+        <div class="contact-card">
+            <div class="contact-item">
+                📧 <strong>Email：</strong><br>
+                <a href="mailto:kukuku84912@gmail.com">kukuku84912@gmail.com</a>
+            </div>
+            <div class="contact-item">
+                💬 <strong>LINE ID：</strong><br>
+                <span>0937128550</span>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--text-dim); margin-top: 40px; font-weight: 300;">期待與您的合作！</p>
+        </div>
+    </section>
+
+</div>
+
+<script>
+    function showPage(pageId, btn) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        document.querySelectorAll('nav button').forEach(b => b.classList.remove('active-btn'));
+        btn.classList.add('active-btn');
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+</script>
+
+</body>
+</html>
